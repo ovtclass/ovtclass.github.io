@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        form {
+            margin: auto;
+        }
+        form div, form {
+            display: flex;
+            flex-direction: column;
+            box-sizing: content-box;
+            width: max-content;
+        }
+    
+        form > div {
+            border-bottom: 3px solid black;
+            padding-bottom: 10px;
+            width: auto;
+        }
+    
+        .cbDiv{
+            display: inline;
+            width: auto;
+        }
+        div:last-of-type .cbDiv > input {
+            float: right;
+        }
+    
+        #deadroot {
+            border: 2px solid blue;
+            padding: .5rem;
+            display: none;
+        }
+    
+        .hvh > div {
+            border: 2px solid blue;
+            padding: .5rem;
+            margin: .2rem;
+        }
+    </style>
+</head>
+<body>
+<form action="" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <div> <!--INVERTER SELECTION-->
+        <h3>Inverter selection</h3>
+        <label for="active">HV-500 Active Cooled</label>
+        <input type="number" name="inv_active_count" id="active">
+        <label for="active">HV-500 Passive Cooled</label>
+        <input type="number" name="inv_pasive_count" id="passive">
+        <label for="active">HV-500 Liquid Cooled</label>
+        <input type="number" name="inv_liquid_count" id="liquid">
+        
+        <div class="cbDiv">
+            <label for="interlock">Interlock</label>
+            <input type="checkbox" name="isInterlockIncluded" id="interlock">
+        </div>
+    </div>
+
+    <div> <!--DIAGNOSTIC TOOL-->
+        <h3>Diagnostic Tool</h3>
+        <label for="diagnostic">DTI DCOM-C Diagnostic Tool</label>
+        <input type="number" name="diagnostic_count" id="diagnostic">
+    </div>
+
+    <div class="hvh"><!--HIGH VOLTAGE-->
+        <h3>High Voltage Harness</h3>
+        <div id="deadroot">
+            <span>Connector</span>
+            <select id="HVHconnector_">
+                <option value="35">35 mm</option>
+                <option value="50">50 mm</option>
+                <option value="70">70 mm</option>
+            </select>
+            <div class="cbDiv">
+                <span>Connector assembly</span>
+                <input type="checkbox" id="HVHassembly_">
+            </div>
+            <span>Cable length</span>
+            <input type="nubmer" id="HVHlength_">
+            <div class="cbDiv">
+                <span>Cable shoe assembly</span>
+                <input type="checkbox" id="HVHshoeassembly_">
+            </div>
+            <span>Cable shoe size</span>
+            <select id="HVHshoeSize_">
+                <option value="M6">M6</option>
+                <option value="M8">M8</option>
+                <option value="M10">M10</option>
+            </select>
+        </div>
+        <button id="addField">Add cable</button>
+        <button id="deleteLast">Delete last cable</button>
+    </div>
+
+    <div><!--LOW VOLTAGE-->
+        <h3>Low Voltage Harness</h3>
+        <label for="cable_quantity">Cable quantity</label>
+        <input type="nubmer" id="cable_quantity">
+        <label for="LVHselect">Select option</label>
+        <select id="LVHselect">
+            <option value="NONE">NONE</option>
+            <option value="connector_only">Connector Only</option>
+            <option value="assembly">Assembly</option>
+        </select>
+        <label for="analog_1_length">Analog Input 1 Length</label>
+        <input type="number" id="analog_1_length">
+        <label for="analog_2_length">Analog Input 2 Length</label>
+        <input type="number" id="analog_2_length">
+        <label for="analog_3_length">Analog Input 3 Length</label>
+        <input type="number" id="analog_3_length">
+        <label for="CAN_1_length">CAN 1 Length</label>
+        <input type="number" id="CAN_1_length">
+        <div class="cbDiv">
+            <label for="OBD">Include OBD Connector</label>
+            <input type="checkbox" id="OBD">
+        </div>
+    </div>
+
+    <div><!--MOTOR SENSOR CONNECTOR-->
+        <h3>Motor Sensor Connector</h3>
+        <div class="cbDiv">
+            <label for="cononly">Connector Only</label>
+            <input type="checkbox" id="cononly">
+        </div>
+        <div class="cbDiv">
+            <label for="rls">RLS RM44Si</label>
+            <input type="checkbox" id="rls">
+        </div>
+        <div class="cbDiv">
+            <label for="resolver">Resolver interface</label>
+            <input type="checkbox" id="resolver">
+        </div>
+        <div class="cbDiv">
+            <label for="enc_splitter">Encoder splitter</label>
+            <input type="checkbox" id="enc_splitter">
+        </div>
+    </div>
+</form>
+
+</body>
+
+
+<script>
+    var counter = 0;
+    window.onload = () => {
+        addField();
+    }
+
+    function addField(){
+        counter++;
+        var newFields = document.getElementById('deadroot').cloneNode(true);
+        newFields.id = 'kabel_' + counter;
+        
+        var innerfields = newFields.childNodes;
+        for (var i = 0; i < innerfields.length; i++) {
+            innerfields[i].id += counter;
+        }
+        document.getElementById('deadroot').parentNode.appendChild(newFields);
+    }
+
+    document.getElementById("addField").addEventListener("click", function(event){
+        event.preventDefault();
+        addField();
+    });
+
+    document.getElementById("deleteLast").addEventListener("click", function(event){
+        event.preventDefault();
+        if (counter > 1){
+            document.getElementById('kabel_' + counter).remove();
+            counter--;
+        }
+        else {
+            alert("You can't remove every cable.");
+        }
+    });
+</script>
+
+</html>
