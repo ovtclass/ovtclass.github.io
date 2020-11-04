@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 
     <style>
         form {
@@ -15,6 +16,18 @@
             box-sizing: content-box;
             width: max-content;
         }
+
+        /* Chrome, Safari, Edge, Opera 
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        }
+
+        /* Firefox 
+        input[type=number] {
+        -moz-appearance: textfield;
+        } */
     
         form > div {
             border-bottom: 3px solid black;
@@ -41,59 +54,86 @@
             padding: .5rem;
             margin: .2rem;
         }
+
+        .cooling_option {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        #ar {
+            color: red;
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            font-weight: 700;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
     </style>
 </head>
 <body>
-<form action="" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <span id="ar">0</span>
+<form id="form" action="" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
     <div> <!--INVERTER SELECTION-->
         <h3>Inverter selection</h3>
         <label for="inerter_type">Type of inverter</label>
-        <select id="inerter_type">
-            <option value="HV-500">HV-500</option>
+        <select id="inerter_type" autocomplete="off">
+            <option hidden disabled data-price="0" selected></option>
+            <option data-price="10000" value="HV-500">HV-500</option>
         </select>
-        <label for="active">HV-500 Active Cooled</label>
-        <input type="number" name="inv_active_count" id="active">
-        <label for="active">HV-500 Passive Cooled</label>
-        <input type="number" name="inv_pasive_count" id="passive">
-        <label for="active">HV-500 Liquid Cooled</label>
-        <input type="number" name="inv_liquid_count" id="liquid">
-        
-        <div class="cbDiv">
-            <label for="interlock">Interlock</label>
-            <input type="checkbox" name="isInterlockIncluded" id="interlock">
+        <div class="cooling_option">
+            <label for="active">Active Cooled</label>
+            <input autocomplete="off" type="number" min="0" value="0"  id="active" data-price="1300">
+            <label for="active_interlock">Interlock</label>
+            <input autocomplete="off" type="checkbox"  id="active_interlock"  data-price="200">
+        </div>
+        <div class="cooling_option">
+            <label for="passive">Passive Cooled</label>
+            <input autocomplete="off" type="number" min="0" value="0"  id="active" data-price="1000">
+            <label for="passive_interlock">Interlock </label>
+            <input autocomplete="off" type="checkbox"  id="passive_interlock"  data-price="200">
+        </div>
+        <div class="cooling_option">
+            <label for="liquid">Liquid Cooled</label>
+            <input autocomplete="off" type="number" min="0" value="0"  id="active" data-price="1500">
+            <label for="liquid_interlock">Interlock </label>
+            <input autocomplete="off" type="checkbox" id="liquid_interlock"  data-price="200">
         </div>
     </div>
 
     <div> <!--DIAGNOSTIC TOOL-->
         <h3>Diagnostic Tool</h3>
         <label for="diagnostic">DTI DCOM-C Diagnostic Tool</label>
-        <input type="number" name="diagnostic_count" id="diagnostic">
+        <input autocomplete="off" type="number" min="0" value="0" name="diagnostic_count" id="diagnostic" data-price="1200">
     </div>
 
     <div class="hvh"><!--HIGH VOLTAGE-->
         <h3>High Voltage Harness</h3>
         <div id="deadroot">
             <span>Connector</span>
-            <select id="HVHconnector_">
-                <option value="35">35 mm</option>
-                <option value="50">50 mm</option>
-                <option value="70">70 mm</option>
+            <select id="HVHconnector_" autocomplete="off">
+                <option hidden disabled data-price="0" selected></option>
+                <option data-price="500" value="35">35 mm</option>
+                <option data-price="600" value="50">50 mm</option>
+                <option data-price="900" value="70">70 mm</option>
             </select>
             <div class="cbDiv">
                 <span>Connector assembly</span>
-                <input type="checkbox" id="HVHassembly_">
+                <input data-price="500" autocomplete="off" type="checkbox" id="HVHassembly_">
             </div>
             <span>Cable length</span>
-            <input type="nubmer" id="HVHlength_">
+            <input data-price="100" autocomplete="off" type="number" id="HVHlength_">
             <div class="cbDiv">
                 <span>Cable shoe assembly</span>
-                <input type="checkbox" id="HVHshoeassembly_">
+                <input data-price="200" autocomplete="off" type="checkbox" id="HVHshoeassembly_">
             </div>
             <span>Cable shoe size</span>
-            <select id="HVHshoeSize_">
-                <option value="M6">M6</option>
-                <option value="M8">M8</option>
-                <option value="M10">M10</option>
+            <select id="HVHshoeSize_" autocomplete="off">
+                <option data-price="0" hidden disabled data-price="0" selected></option>
+                <option data-price="100" value="M6">M6</option>
+                <option data-price="110" value="M8">M8</option>
+                <option data-price="110" value="M10">M10</option>
             </select>
         </div>
         <button id="addField">Add cable</button>
@@ -103,24 +143,24 @@
     <div><!--LOW VOLTAGE-->
         <h3>Low Voltage Harness</h3>
         <label for="cable_quantity">Cable quantity</label>
-        <input type="nubmer" id="cable_quantity">
+        <input autocomplete="off" type="number" min="0" value="0" id="cable_quantity" data-price="320">
         <label for="LVHselect">Select option</label>
-        <select id="LVHselect">
-            <option value="NONE">NONE</option>
-            <option value="connector_only">Connector Only</option>
-            <option value="assembly">Assembly</option>
+        <select id="LVHselect" autocomplete="off">
+            <option data-price="0" hidden disabled data-price="0" selected></option>
+            <option data-price="100" value="connector_only">Connector Only</option>
+            <option data-price="200" value="assembly">Assembly</option>
         </select>
         <label for="analog_1_length">Analog Input 1 Length</label>
-        <input type="number" id="analog_1_length">
+        <input autocomplete="off" type="number" min="0" value="0" id="analog_1_length" data-price="50">
         <label for="analog_2_length">Analog Input 2 Length</label>
-        <input type="number" id="analog_2_length">
+        <input autocomplete="off" type="number" min="0" value="0" id="analog_2_length" data-price="50">
         <label for="analog_3_length">Analog Input 3 Length</label>
-        <input type="number" id="analog_3_length">
+        <input autocomplete="off" type="number" min="0" value="0" id="analog_3_length" data-price="50">
         <label for="CAN_1_length">CAN 1 Length</label>
-        <input type="number" id="CAN_1_length">
+        <input autocomplete="off" type="number" min="0" value="0" id="CAN_1_length" data-price="75">
         <div class="cbDiv">
             <label for="OBD">Include OBD Connector</label>
-            <input type="checkbox" id="OBD">
+            <input autocomplete="off" type="checkbox" id="OBD" data-price="90">
         </div>
     </div>
 
@@ -128,19 +168,19 @@
         <h3>Motor Sensor Connector</h3>
         <div class="cbDiv">
             <label for="cononly">Connector Only</label>
-            <input type="checkbox" id="cononly">
+            <input autocomplete="off" type="checkbox" id="cononly" data-price="200">
         </div>
         <div class="cbDiv">
             <label for="rls">RLS RM44Si</label>
-            <input type="checkbox" id="rls">
+            <input autocomplete="off" type="checkbox" id="rls" data-price="300">
         </div>
         <div class="cbDiv">
             <label for="resolver">Resolver interface</label>
-            <input type="checkbox" id="resolver">
+            <input autocomplete="off" type="checkbox" id="resolver" data-price="100">
         </div>
         <div class="cbDiv">
             <label for="enc_splitter">Encoder splitter</label>
-            <input type="checkbox" id="enc_splitter">
+            <input autocomplete="off" type="checkbox" id="enc_splitter" data-price="150">
         </div>
     </div>
 </form>
@@ -149,6 +189,7 @@
 
 
 <script>
+    
     var counter = 0;
     window.onload = () => {
         addField();
@@ -181,6 +222,79 @@
             alert("You can't remove every cable.");
         }
     });
+
+
+/*    document.onload = () => {
+        document.querySelectorAll('input[type="number"]').forEach(item => {
+            item.setAttribute("data-oldvalue", item.value);
+        });
+    }
+    document.querySelectorAll('input[type="number"]').forEach(item => {
+        item.addEventListener('focus', event => {
+        item.setAttribute("data-oldvalue", item.value);
+        console.log("asd");
+        });
+    })
+
+
+    var value = 0;
+    document.querySelectorAll('input').forEach(item => {
+        item.addEventListener('change', event => {
+        var price = parseInt(event.target.dataset.price);
+        if (event.target.type == "checkbox"){
+            if (event.target.checked){
+                value += price;
+            }
+            else {
+                value -= price;
+            }
+        }
+        else if (event.target.type == "number") {
+            value -= (price * parseInt(event.target.dataset.oldvalue));
+            value += (price * parseInt(event.target.value));
+        }
+        console.log(value);
+        })
+    })
+
+    document.querySelectorAll('select').forEach(item => {
+        item.addEventListener('focus', event => {
+        item.setAttribute("data-oldvalue", item.value);
+        })
+    })
+
+    document.querySelectorAll('select').forEach(item => {
+        item.addEventListener('change', event => {
+            value -= event
+        })
+    })
+    */
+
+    var form = document.querySelector('form');
+    form.addEventListener('change', function() {
+        //calculate price
+        price = 0;
+        var NumberInputs = document.querySelectorAll('input[type="number"]');
+        var Selectoptions = document.querySelectorAll('option');
+        var CheckboxInputs = document.querySelectorAll('input[type="checkbox"]');
+
+        NumberInputs.forEach(item => {
+            price += parseInt(item.value) * parseInt(item.dataset.price);
+        });
+        Selectoptions.forEach(item => {
+            if (item.selected == true){
+                price += parseInt(item.dataset.price);
+            }
+        });
+        CheckboxInputs.forEach(item => {
+            if (item.checked == true) {
+                price += parseInt(item.dataset.price);
+            }
+        })
+        console.log(price);
+        document.getElementById('ar').innerHTML = price;
+    });
+    
 </script>
 
 </html>
