@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-
+    <title>Drivetrain Configurator</title>
     <style>
         form {
             margin: auto;
@@ -123,10 +121,10 @@
                 <input data-price="500" autocomplete="off" type="checkbox" id="HVHassembly_">
             </div>
             <span>Cable length</span>
-            <input data-price="100" autocomplete="off" type="number" id="HVHlength_">
+            <input data-price="100" min="0" value="0" autocomplete="off" type="number" id="HVHlength_">
             <div class="cbDiv">
                 <span>Cable shoe assembly</span>
-                <input data-price="200" autocomplete="off" type="checkbox" id="HVHshoeassembly_">
+                <input data-price="200" min="0" value="0" autocomplete="off" type="checkbox" id="HVHshoeassembly_">
             </div>
             <span>Cable shoe size</span>
             <select id="HVHshoeSize_" autocomplete="off">
